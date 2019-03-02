@@ -1,0 +1,24 @@
+#include<iostream>
+using namespace std;
+
+//把src针的最上面一个盘子移动到dest针上
+void move(char src,char dest){
+  cout<<src<<"--->"<<dest<<endl;
+}
+void hanoi(int n,char src,char medium,char dest){
+  if(n==1)
+    move(src,dest);
+  else{
+    hanoi(n-1,src,dest,medium);//将n-1个盘子由src移动到medium上，以dest为中介
+    move(src,dest);//将src上最后一个盘子移动到dest上
+    hanoi(n-1,medium,src,dest);//将n-1个盘子由medium移动到dest上，以src为中介
+  }
+}
+int main(){
+  int m;
+  cout<<"Enter the number of diskes: ";
+  cin>>m;
+  cout<<"the steps to moving"<<m<<"diskes: "<<endl;
+  hanoi(m,'A','B','C');
+  return 0;
+}
