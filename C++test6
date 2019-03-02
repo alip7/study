@@ -1,0 +1,50 @@
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+enum GameStatus{WIN,LOSE,PLAYING}
+int main(){
+  int sum,myPoint;
+  GameStatus status;
+  unsigned seed;
+  int rollDice();
+  cout<<"please enter an unsigned integer: ";
+  cin>>seed;
+  srand(seed);
+  sum=rollDice();
+  switch(sum){
+    case 7:
+    case 11:
+      status=WIN;
+      break;
+    case 2:
+    case 3:
+    case 12:
+      status=LOSE;
+      break;
+    default:
+      status=PLAYING;
+      myPoint=sum;
+      cout<<"Point is : "<<myPoint<<endl;
+      break;  
+  }
+  while(status==PLAYING){
+    sum=rollDice();
+    if(sum==myPoint)
+      status=WIN;
+    else if(sum==7)
+      status=LOSE;
+  }
+  if(status==WIN)
+    cout<<"Player wins"<<endl;
+  if(status==LOSE)
+    cout<<"Player loses"<<endl;
+  return 0;
+}
+int rollDice(){
+  int a=1+rand()%6;
+  int b=1+rand()%6;
+  int sum=a+b;
+  cout<<"play rolled"<<a<<"+"<<b<<"="<<a+b<<endl;
+  return sum;
+}
