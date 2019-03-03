@@ -10,4 +10,5 @@ int main(){
   double c = power(5,2)
   cout<<"5 to the power is "<<c<<endl;
   return 0;
+  
 }
