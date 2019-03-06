@@ -1,0 +1,141 @@
+#include<iostream>
+using namespace std;
+
+enum CPU_Rank{p1=1,p2,p3,p4,p5,p6,p7};
+class CPU{
+  private:
+    CPU_Rank rank;
+    int frequency;
+    float voltage;
+  public:
+    CPU(CPU_Rank r,int f,float v){
+      rank=r;
+      frequency=f;
+      voltage=v;
+      cout<<"构造了一个CPU！"<<endl;
+    }
+    ~cpu(){cout<<"析构了一个CPU！"<<endl;}
+    
+    CPU_Rank GetRank() const{return rank;}
+    int GetFrequency const{return frequency;}    //外部接口函数，访问三个私有成员
+    float GetVoltage const{return voltage;}
+    
+    void SetRank(CPU_Rank r){rank=r;}
+    void SetFrequency(int f){frequency=f;}       //设置三个私有成员接口
+    void SetVoltage(float v){voltage=v;}
+    
+    void Run(){cout<<"CPU开始运行！"<<endl;}
+    void Stop(){cout<<"CPU停止运行！"<<endl;}
+};
+
+enum RAM_Type{DDR2=2,DDR3,DDR4}；
+class RAM{
+  private:
+    enum RAM_Type type;
+    unsigned int frequency;    //MHz
+    unsigned int size;         //GB
+  public:
+    RAM(RAM_Type t,int f,int s){  //构造函数
+      type=t;
+      frequency=f;
+      size=s;
+      cout<<"构造了一个RAM！"<<endl;
+    }
+  ~RAM(){cout<<"析构了一个RAM!"<<endl;}
+  
+  enum RAM_Type GetType() const {return type;}
+  unsigned int GetFrequency() const {return frequency;}      //外部接口函数，访问三个私有成员
+  unsigned float GetSize() const {return size;}
+  
+  void SetType(enum RAM_Type t){type=t;}
+  void SetFrequency(unsigned int f){frequency=f;}           //设置三个私有成员接口
+  void SetSize(unsigned int s){size=s;}
+  
+  void Run(){cout<<"RAM开始运行！"<<endl;}
+  void Stop(){cout<<"RAM停止运行!"<<endl;}
+};
+
+enum CDROM_Interface{SATA.USB};
+enum CDROM_Install_Type{external,built_in};
+class CDROM{
+  private:
+    enum CDROM_Interface interface_type;
+    unsigned int cache_size;
+    CDROM_Install_Type install_type;
+  public:
+    CDROM(CDROM_Interface i,unsigned int c,CDROM_Install_Type it){
+      interface_type=i;
+      cache_size=c;
+      install_type=it;
+      cout<<"构造了一个CDROM!"<<endl;
+    }
+    ~CDROM(){cout<<"析构了一个CDROM!"<<endl;}
+    
+    enum CDROM_Interface_Type GetInterfaceType() const{return interface_type;}
+    unsigned int GetSize() const{return cache_size;}                 //外部接口函数，访问三个私有成员
+    CDROM_Install_Type GetInstallType() const{return install_type;}
+    
+    void SetInterfaceType(CDROM_Interface i){interface=i;}
+    void SetSize(unsigned int c){cache_size=c;}                      //设置三个私有成员接口
+    void SetInstallType(CDROM_Install_Type it){install_type=it;}
+    
+    void Run(){cout<<"CDROM开始运行！"<<endl;}
+    void Stop(){cout<<"CDROM停止运行！"<<endl;}   
+};
+
+class COMPUTER{
+  private:
+    CPU my_cpu;
+    RAM my_ram;
+    CDROM my_cdrom;
+    unsigned int storage_size; //GB
+    unsigned int bandwidth;  //MB
+  public:
+    COMPUTER(CPU c,RAM r,CDROM cd,unsigned int s,unsigned int b);
+    ~COMPUTER(){cout<<"析构了一个COMPUTER!"<<endl;}
+    
+    void Run(){
+      my_cpu.Run();
+      my_ram.Run();
+      my_cdrom.Run();
+      cout<<"COMPUTER开始运行！"<<endl;
+    }
+    
+    void Stop(){
+      my_cpu.Stop();
+      my_ram.Stop();
+      my_cdrom.Stop();
+      cout<<"COMPUTER停止运行！"<<endl;
+    }
+};
+//↓构造函数，因为写在了类的外部，所以要加上作用域限定符
+COMPUTER::COMPUTER(CPU c,RAM r,CDROM cd,unsigned int s,unsigned int b):my_cpu(c),my_ram(r),my_cdrom(cd){//内嵌对象，分别调用各自类的拷贝函数进行初始化
+  storage_size=s;
+  bandwidth=b;
+  cout<<"构造了一个COMPUTER!"<<endl;
+  
+}
+
+int main(){
+  CPU a(p6,300,2.8);
+  a.Run();
+  a.Stop();
+  cout<<"*****************"<<endl;
+  
+  RAM b(DDR3,1600,8);
+  b.Run();
+  b.Stop();
+  cout<<"*****************"<<endl;
+  
+  CDROM c(SATA,2,built_in);
+  c.Run();
+  c.Stop();
+  cout<<"*****************"<<endl;
+  
+  COMPUTER my_computer(a,b,c,128,10);
+  cout<<"*****************"<<endl;
+  my_computer.Run();
+  my_computer.Stop();
+  
+  return 0;
+}
