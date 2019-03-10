@@ -1,14 +1,14 @@
 #include<iostream>
 using namespace std;
 struct MyTimeStruct{
-  unsigned int year;
-  unsigned int month;
-  unsigned int day;
-  unsigned int hour;
-  unsigned int min;
-  unsigned int sec;
+    unsigned int year;
+    unsigned int month;
+    unsigned int day;
+    unsigned int hour;
+    unsigned int min;
+    unsigned int sec;
 };
 int main(){
-  MyTimeStruct myTime={2019,3,1,22,32,00};
-  return 0;
+    MyTimeStruct myTime={2019,3,1,22,32,00};
+    return 0;
 }
